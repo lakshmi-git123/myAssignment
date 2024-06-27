@@ -15,6 +15,11 @@ my-flask-firestore-api/
 ├── requirements.txt
 ├── README.md
 └── terraform/
+    ├── main.tf
+    ├── outputs.tf
+    ├── variables.tf
+    └── versions.tf
+
 
 ## Prerequisites
 
@@ -64,5 +69,6 @@ my-flask-firestore-api/
 
 - `POST /add_person`: Add a person record.
 - `GET /get_person/<record_id>`: Get a person record by ID.
+
 
 
