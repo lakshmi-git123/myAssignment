@@ -42,8 +42,8 @@ my-flask-firestore-api/
 
 2. Build and run the Docker container locally:
 
-   docker build -t DI-PY-api .
-   docker run -p 4040:4040 -v $(pwd)/service-account-file.json:/app/service-account-file.json DI-PY-api
+   docker build -t myassignment .
+   docker run -p 4040:4040 -v $(pwd)/service-account-file.json:/app/service-account-file.json myassignment
    ```
 
 3. Access the API at http://localhost:4040
