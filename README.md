@@ -1,16 +1,16 @@
 
-# Flask Firestore API
+# Flask Bigquery API
 
-This repository contains a Flask application that interacts with Google Firestore. The application is containerized using Docker and deployed using a CI/CD pipeline with GitHub Actions and Terraform for GCP infrastructure.
+This repository contains a Flask application that interacts with Google Bigquery. The application is containerized using Docker and deployed using a CI/CD pipeline with GitHub Actions and Terraform for GCP infrastructure.
 
 ## Project Structure
 
 ```
-my-flask-firestore-api/
+my-flask-Bigquery-api/
 ├── .github/
 │   └── workflows/
 │       └── pipeline.yml
-├── api-service.py
+├── assignment.py
 ├── Dockerfile
 ├── requirements.txt
 ├── README.md
@@ -43,7 +43,7 @@ my-flask-firestore-api/
 2. Build and run the Docker container locally:
 
    docker build -t myassignment .
-   docker run -p 4040:4040 -v $(pwd)/service-account-file.json:/app/service-account-file.json myassignment
+   docker run -p 4040:4040 -v $(pwd)/service-account-file.json:myassignment-426912-04f2ed64ffc3.json myassignment
    ```
 
 3. Access the API at http://localhost:4040
@@ -63,7 +63,7 @@ my-flask-firestore-api/
 
 2. Apply the Terraform configuration:
 
-   terraform apply -var="project_id=YOUR_GCP_PROJECT_ID" -var="region=YOUR_GCP_REGION"
+   terraform apply -var="project_id=myassignment-426912" -var="region=us-central1N"
 
 ## Endpoints
 

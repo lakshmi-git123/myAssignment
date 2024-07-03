@@ -14,13 +14,13 @@ resource "google_firestore_index" "index" {
 }
 
 resource "google_cloud_run_service" "service" {
-  name     = "DI-py-api"
+  name     = "myassignment"
   location = var.region
 
   template {
     spec {
       containers {
-        image = "gcr.io/${var.project_id}/DI-py-api"
+        image = "gcr.io/${var.project_id}/myassignment"
       }
     }
   }

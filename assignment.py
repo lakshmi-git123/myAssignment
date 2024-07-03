@@ -24,6 +24,16 @@ schema = {
     }
 }
 
+
+# Initialize the BigQuery client with your project ID
+client = bigquery.Client(project='myassignment-426912')  # Initialize the BigQuery client
+
+        
+# Define your BigQuery dataset and table information
+dataset_id = 'datasetname'
+table_id = 'tablename_json'
+        
+
 @app.route('/person', methods=['POST'])
 def create_person():
     try:
@@ -31,17 +41,6 @@ def create_person():
         v = Validator(schema)
         if not v.validate(data):
             return jsonify({"error": "Invalid data format", "validation_errors": v.errors})
-        
-   # Initialize the BigQuery client with your project ID
-        #os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'C:\\Users\\vishn\\myAssignment\\myassignment-426912-04f2ed64ffc3.json'  # Set the path to your key file
-        #print('GOOGLE_APPLICATION_CREDENTIALS:', os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'))
-
-        client = bigquery.Client(project='myassignment-426912')  # Initialize the BigQuery client
-
-        
-        # Define your BigQuery dataset and table information
-        dataset_id = 'datasetname'
-        table_id = 'tablename_json'
         
         # Create a BigQuery row from the validated data
         row = {
@@ -65,6 +64,26 @@ def create_person():
     
     except Exception as e:
         return jsonify({"error": str(e)})
+    
+@app.route('/person/<int:person_id>', methods=['GET'])
+def get_person(person_id):
+    try:
+        # Query the person record from BigQuery
+        query = f"SELECT * FROM `{dataset_id}.{table_id}` WHERE id = {person_id}"
+        query_job = client.query(query)
+        results = query_job.result()
+
+        # Check if any rows were returned
+        rows = list(results)
+        if not rows:
+            return jsonify({"message": "Person not found"}), 404
+        
+        person_record = dict(rows[0])  # Convert the row to a dictionary
+
+        return jsonify(person_record), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=4040)
