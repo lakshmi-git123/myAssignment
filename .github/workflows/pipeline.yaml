@@ -38,4 +38,4 @@ jobs:
             --region ${{ secrets.GCP_REGION }} \
             --allow-unauthenticated
 options:
-logging: CLOUD_LOGGING_ONLY
+      logging: NONE
