@@ -39,9 +39,10 @@ jobs:
         run: |
           docker push us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA
 
-      - name: Deploy to Google Cloud
+      - name: Deploy to Cloud Run
         run: |
-          gcloud compute instances create-with-container assignment --container-image us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image
-        env:
-          CLOUDSDK_COMPUTE_REGION: us-central1
-          CLOUDSDK_COMPUTE_ZONE: us-central1-a
+          gcloud run deploy myassignment \
+            --image us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated
