@@ -1,16 +1,13 @@
 steps:
-  # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
            'us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image', 
            '.']
 
-  # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 
            'us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image']
 
-  # Entrypoint, timeout and environment variables
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     timeout: 240s
