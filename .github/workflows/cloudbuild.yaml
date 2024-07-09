@@ -1,26 +1,33 @@
-steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'build'
-      - '-t'
-      - 'us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image'
-      - '.'
+name: CI/CD Pipeline
 
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image'
+on:
+  push:
+    branches:
+      - main
 
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    timeout: '240s'
-    args:
-      - 'compute'
-      - 'instances'
-      - 'create-with-container'
-      - 'assignment'
-      - '--container-image'
-      - 'us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image'
-    env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        uses: 'docker://gcr.io/cloud-builders/docker'
+        with:
+          args: build -t us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image .
+
+      - name: Push Docker image
+        uses: 'docker://gcr.io/cloud-builders/docker'
+        with:
+          args: push us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image
+
+      - name: Deploy to Google Cloud
+        uses: 'docker://gcr.io/google.com/cloudsdktool/cloud-sdk'
+        with:
+          entrypoint: gcloud
+          args: compute instances create-with-container assignment --container-image us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image
+        env:
+          CLOUDSDK_COMPUTE_REGION: us-central1
+          CLOUDSDK_COMPUTE_ZONE: us-central1-a
