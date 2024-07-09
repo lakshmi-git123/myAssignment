@@ -31,12 +31,9 @@ jobs:
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
 
-      - name: Build and Push Docker image
+      - name: Build Docker image
         run: |
-          docker buildx build \
-            -t us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA \
-            --secret stringArray id=GCP_SA,src="${{ secrets.GCP_SA_KEY }}" \
-            .
+          docker build -t us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA .
 
       - name: Push Docker image
         run: |
