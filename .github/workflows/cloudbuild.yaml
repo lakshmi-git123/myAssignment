@@ -1,3 +1,4 @@
+
 name: CI/CD Pipeline
 
 on:
@@ -22,7 +23,6 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          version: 'latest'
           project_id: 'myassignment-426912'
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
@@ -30,20 +30,15 @@ jobs:
       - name: Authenticate Docker with Google Cloud
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
-
       - name: Build Docker image
         run: |
-          docker build -t us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA .
-
+          docker build -t us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image .
       - name: Push Docker image
         run: |
-          docker push us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA
-
-      - name: Deploy to Cloud Run
+          docker push us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image
+      - name: Deploy to Google Cloud
         run: |
-          gcloud run deploy myassignment \
-            --image us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA \
-            --platform managed \
-            --region us-central1 \
-            --allow-unauthenticated \
-            --quiet
+          gcloud compute instances create-with-container assignment --container-image us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image
+        env:
+          CLOUDSDK_COMPUTE_REGION: us-central1
+          CLOUDSDK_COMPUTE_ZONE: us-central1-a
