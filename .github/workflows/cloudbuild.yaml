@@ -45,4 +45,5 @@ jobs:
             --image us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA \
             --platform managed \
             --region us-central1 \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --quiet
