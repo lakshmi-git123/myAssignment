@@ -13,6 +13,6 @@ EXPOSE 4040
 ENV PORT=4040
 #ENV GOOGLE_APPLICATION_CREDENTIALS="/app/service-account-file.json"
 
-ENV GOOGLE_APPLICATION_CREDENTIALS="myassignment-426912-04f2ed64ffc3.json"
+ENV GOOGLE_APPLICATION_CREDENTIALS="${{ secrets.GCP_SA_KEY }}"
 
 CMD ["python", "assignment.py"]
