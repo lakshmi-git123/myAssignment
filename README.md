@@ -58,7 +58,5 @@ my-flask-Bigquery-api/
 - `POST /add_person`: Add a person record.
 - `GET /get_person/<record_id>`: Get a person record by ID.
 
-- 
-
 
 
