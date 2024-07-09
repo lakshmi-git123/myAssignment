@@ -33,11 +33,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image .
+          docker build -t us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA .
 
       - name: Push Docker image
         run: |
-          docker push us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image
+          docker push us-central1-docker.pkg.dev/myassignment-426912/cloud-run-source-deploy/image:$GITHUB_SHA
 
       - name: Deploy to Google Cloud
         run: |
