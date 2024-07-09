@@ -1,7 +1,7 @@
 
 # Flask Bigquery API
 
-This repository contains a Flask application that interacts with Google Bigquery. The application is containerized using Docker and deployed using a CI/CD pipeline with GitHub Actions and Terraform for GCP infrastructure.
+This repository contains a Flask application that interacts with Google Bigquery. The application is containerized using Docker and deploys using a CI/CD pipeline with GitHub Actions into Google Cloud Run.
 
 ## Project Structure
 
@@ -9,23 +9,18 @@ This repository contains a Flask application that interacts with Google Bigquery
 my-flask-Bigquery-api/
 ├── .github/
 │   └── workflows/
-│       └── pipeline.yml
+│       └── cloudbuild.yaml
 ├── assignment.py
 ├── Dockerfile
 ├── requirements.txt
 ├── README.md
-└── terraform/
-    ├── main.tf
-    ├── outputs.tf
-    ├── variables.tf
-    └── versions.tf
+
 
 
 ## Prerequisites
 
 - Docker
 - Google Cloud SDK
-- Terraform
 - GitHub repository with secrets configured:
   - `GCP_PROJECT_ID`: Your Google Cloud project ID.
   - `GCP_SA_KEY`: Your Google Cloud service account key in JSON format.
@@ -50,9 +45,8 @@ my-flask-Bigquery-api/
 
 ### CI/CD Pipeline
 
-1. Push your code to the `main` branch of your GitHub repository. The GitHub Actions workflow will build, package, and deploy your application to Google Cloud Run.
+ Push your code to the `main` branch of your GitHub repository. The GitHub Actions workflow will build, package, and deploys application to Google Cloud Run.
 
-2. The Terraform configuration will set up the required infrastructure on GCP.
 
 
 - `POST /add_person`: Add a person record.
